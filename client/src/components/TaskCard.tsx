@@ -66,7 +66,7 @@ export function TaskCard({ task, onToggleComplete, onDelete }: TaskCardProps) {
         data-testid={`card-task-${task.id}`}
       >
         <div className="flex gap-3">
-          <div className={`w-1 rounded-full ${getPriorityColor(task.priority)}`} />
+          <div className={`w-1 self-stretch rounded-full ${getPriorityColor(task.priority)}`} />
           <Button
             size="icon"
             variant="ghost"

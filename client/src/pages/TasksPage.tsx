@@ -30,8 +30,8 @@ export default function TasksPage() {
   // Parse voice command
   const parseCommandMutation = useMutation({
     mutationFn: async (transcript: string) => {
-      const response = await apiRequest<VoiceCommand>("POST", "/api/voice/parse", { transcript });
-      return response;
+      const response = await apiRequest("POST", "/api/voice/parse", { transcript });
+      return response as unknown as VoiceCommand;
     },
     onSuccess: (data) => {
       setParsedCommand(data);
@@ -54,10 +54,10 @@ export default function TasksPage() {
         notes: command.notes,
         dueDate: command.dueDate ? new Date(command.dueDate) : null,
         dueTime: command.dueTime,
-        priority: command.priority || "medium",
+        priority: command.priority || "medium" as const,
         completed: false,
       };
-      return await apiRequest<Task>("POST", "/api/tasks", taskData);
+      return await apiRequest("POST", "/api/tasks", taskData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
@@ -80,7 +80,7 @@ export default function TasksPage() {
   // Toggle task completion
   const toggleCompleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      return await apiRequest<Task>("POST", `/api/tasks/${id}/toggle`, {});
+      return await apiRequest("POST", `/api/tasks/${id}/toggle`, {});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });

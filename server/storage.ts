@@ -33,7 +33,9 @@ export class MemStorage implements IStorage {
     const task: Task = {
       ...insertTask,
       id,
+      notes: insertTask.notes || null,
       dueDate: insertTask.dueDate ? new Date(insertTask.dueDate) : null,
+      dueTime: insertTask.dueTime || null,
       completedAt: null,
       createdAt: new Date(),
     };
